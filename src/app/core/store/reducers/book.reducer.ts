@@ -1,6 +1,8 @@
 
 import * as fromBook from '../actions/book.actions';
 import { Book } from '../../models/book.model';
+import { createReducer, on, createFeatureSelector, createSelector } from '@ngrx/store';
+import { Action } from '@ngrx/store';
 
 
 export interface BookState {
@@ -16,35 +18,45 @@ const initState: BookState = {
     loading: false,
     error: null
 };
-export function BookSReducer(
-    state = initState,
-    action: fromBook.bookActions
+const BookSReducer = createReducer(
+    initState,
+    on(fromBook.LoadBook, (state) => ({
+        ...state,
+        loading: true,
+        error: null
+    })),
+    on(fromBook.LoadBookError, (state, { error }) => ({
+        ...state,
+        loading: false,
+        loaded: false,
+        error
+    })),
+    on(fromBook.LoadBookSuccessful, (state, { payload }) => ({
+        ...state,
+        loading: false,
+        loaded: true,
+        books: payload
+    })),
+);
+
+export function reducer(
+    state: BookState | undefined,
+    action: Action
 ): BookState {
-    switch (action.type) {
-        case fromBook.LOAD_BOOK:
-            return {
-                ...state,
-                loading: true,
-                error: null
-            };
-        case fromBook.LOAD_BOOK_SUCCESSFUL:
-            return {
-                ...state,
-                loading: false,
-                loaded: true,
-                books: [...action.payload]
-            };
-        case fromBook.LOAD_BOOK_ERROR:
-            return {
-                ...state,
-                loading: false,
-                loaded: false,
-                error: {
-                    status: action.error.status,
-                    ulr: action.error.url,
-                    message: action.error.message
-                }
-            };
-        default: return state;
-    }
+    return BookSReducer(state, action);
 }
+export const bookKey = 'book';
+
+export const selectBook = createFeatureSelector<BookState>(
+    bookKey
+);
+
+export const selectLoadBooks = createSelector(
+    selectBook,
+    (state: BookState) => state.books
+);
+
+export const selectLoadingBook = createSelector(
+    selectBook,
+    (state: BookState) => state.loading
+);

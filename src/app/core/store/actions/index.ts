@@ -1,1 +1,5 @@
-export * from './book.actions';
+import * as BookActions from './book.actions';
+
+export {
+    BookActions
+};

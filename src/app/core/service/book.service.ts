@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Book } from '../models/book.model';
-
-@Injectable({
-  providedIn: 'root'
-})
+import * as fromBookReducer from '../store/reducers/index';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { BookActions } from '../store/actions';
+@Injectable()
 export class BookService {
+  book: Book;
+  constructor(private store: Store<fromBookReducer.BookState>){}
 
-  constructor(private http: HttpClient) { }
-
-  public getBooks(){
-    return this.http.get<Book[]>('https://jsonplaceholder.typicode.com/posts');
+  getBook(): Observable<Book[]>{
+    return this.store.pipe(select(fromBookReducer.selectLoadBooks));
   }
-}
+  dispatchBook(){
+    this.store.dispatch(BookActions.LoadBook());
+  }
 
+}
