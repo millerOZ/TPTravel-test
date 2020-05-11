@@ -28,6 +28,7 @@ import { RouterModule } from '@angular/router';
 import { NgZorroAntdModule, NzTableModule } from 'ng-zorro-antd';
 //import { HomeComponentModule } from './home/home.module';
 import { ROOT_REDUCERS } from './app.reducer';
+
 registerLocaleData(en);
 @NgModule({
   declarations: [
@@ -38,19 +39,17 @@ registerLocaleData(en);
     RouterModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    BrowserAnimationsModule,
     HttpClientModule,
    // HomeComponentModule,
     NgZorroAntdModule,
     NzTableModule,
+    StoreModule.forRoot(ROOT_REDUCERS),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
     }),
-    StoreModule.forRoot(ROOT_REDUCERS),
     EffectsModule.forRoot([BookEffects]),
-
+    BrowserAnimationsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

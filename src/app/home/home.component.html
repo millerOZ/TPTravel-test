@@ -1,12 +1,6 @@
-<h3>HOME </h3>
-
-<!-- <app-table-book
-  [list]="LoadBooks$ | async"
->
-</app-table-book> -->
 <nz-table  #basicTable 
             [nzData]="LoadBooks$ | async" 
-            [nzLoading]="loading"
+            [nzLoading]="loading$ | async"
             [nzScroll]="{ y: '320px' }" 
             [nzFrontPagination]="true"
 >

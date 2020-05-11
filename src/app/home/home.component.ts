@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   public listOfData: Book[] = [];
-  public loading: boolean;
+  public loading$: Observable<boolean>;
   public LoadBooks$: Observable<Book[]>;
 
   constructor(
@@ -19,8 +19,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.service.dispatchBook();
     this.LoadBooks$ = this.service.getBook();
+    this.loading$ = this.service.getLoadingBook();
   }
-  // dispatchLoadBook() {
+  //   dispatchLoadBook() {
   //  this.service.dispatchBook();
   // }
 

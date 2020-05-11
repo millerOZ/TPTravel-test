@@ -14,8 +14,10 @@ export class BookService {
   getBook(): Observable<Book[]>{
     return this.store.pipe(select(fromBookReducer.selectLoadBooks));
   }
+  getLoadingBook(){
+    return this.store.pipe(select(fromBookReducer.selectLoadingBook));
+  }
   dispatchBook(){
     this.store.dispatch(BookActions.LoadBook());
   }
-   
 }
