@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 import { BookActions } from '../actions/index';
 import { Book } from 'src/app/core/models/book.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class BookService {
-  book: Book;
-  constructor(private store: Store<fromBookReducer.BookState>){}
+  constructor(public store: Store<fromBookReducer.BookState>){}
 
   getBook(): Observable<Book[]>{
     return this.store.pipe(select(fromBookReducer.selectLoadBooks));
@@ -16,5 +17,5 @@ export class BookService {
   dispatchBook(){
     this.store.dispatch(BookActions.LoadBook());
   }
-
+   
 }

@@ -3,5 +3,26 @@
 <!-- <app-table-book
   [list]="LoadBooks$ | async"
 >
-
 </app-table-book> -->
+<nz-table  #basicTable 
+            [nzData]="LoadBooks$ | async" 
+            [nzLoading]="loading"
+            [nzScroll]="{ y: '320px' }" 
+            [nzFrontPagination]="true"
+>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Body</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td >{{ data.id }}</td>
+        <td>{{ data.title }}</td>
+        <td>{{ data.body }}</td>
+    
+      </tr>
+    </tbody>
+  </nz-table>

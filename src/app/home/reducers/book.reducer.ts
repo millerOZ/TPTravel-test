@@ -5,7 +5,6 @@ import { Action } from '@ngrx/store';
 import { OptionType } from 'src/app/core/enums/enums';
 import { Book } from 'src/app/core/models/book.model';
 
-
 export interface BookState {
     books: Book[];
     loaded: boolean;

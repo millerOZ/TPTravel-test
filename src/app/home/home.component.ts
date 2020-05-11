@@ -11,8 +11,9 @@ export class HomeComponent implements OnInit {
   public listOfData: Book[] = [];
   public loading: boolean;
   public LoadBooks$: Observable<Book[]>;
+
   constructor(
-    private service: BookService,
+    public service: BookService
   ) { }
 
   ngOnInit(): void {
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
     this.LoadBooks$ = this.service.getBook();
   }
   // dispatchLoadBook() {
-  //   this.service.dispatchBook();
+  //  this.service.dispatchBook();
   // }
 
 }
